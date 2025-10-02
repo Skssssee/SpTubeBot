@@ -12,7 +12,10 @@ RUN apt-get update && \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
 
-# Install 'uv' if you meant 'uvicorn', otherwise just upgrade pip
+# Ensure ffmpeg is in PATH
+ENV PATH="/usr/bin:${PATH}"
+
+# Upgrade pip and install uvicorn (if needed)
 RUN pip install --no-cache-dir --upgrade pip uvicorn
 
 # Copy project files
@@ -21,5 +24,5 @@ COPY . .
 # Install your package in editable mode
 RUN pip install --no-cache-dir -e .
 
-# Start your application (replace with your actual command)
+# Default command
 CMD ["start"]
